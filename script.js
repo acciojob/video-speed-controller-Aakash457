@@ -6,40 +6,40 @@ const toggle = player.querySelector(".toggle");
 const ranges = player.querySelectorAll(".player__slider");
 const skipButtons = player.querySelectorAll("[data-skip]");
 
-// play pause
+// PLAY / PAUSE
 function togglePlay() {
   if (video.paused) video.play();
   else video.pause();
 }
 
-// change icon
+// UPDATE PLAY BUTTON ICON
 function updateButton() {
   toggle.textContent = video.paused ? "►" : "❚ ❚";
 }
 
-// update progress bar
+// PROGRESS BAR UPDATE
 function handleProgress() {
   const percent = (video.currentTime / video.duration) * 100;
   progressFilled.style.flexBasis = `${percent}%`;
 }
 
-// scrub progress
+// SCRUB
 function scrub(e) {
   const scrubTime = (e.offsetX / progress.offsetWidth) * video.duration;
   video.currentTime = scrubTime;
 }
 
-// volume + speed
+// VOLUME + SPEED
 function handleRange() {
   video[this.name] = this.value;
 }
 
-// skip
+// SKIP
 function skip() {
   video.currentTime += parseFloat(this.dataset.skip);
 }
 
-// listeners
+// LISTENERS
 video.addEventListener("click", togglePlay);
 video.addEventListener("play", updateButton);
 video.addEventListener("pause", updateButton);
@@ -52,6 +52,7 @@ ranges.forEach(r => r.addEventListener("mousemove", handleRange));
 
 skipButtons.forEach(btn => btn.addEventListener("click", skip));
 
+// SCRUB DRAG
 let mousedown = false;
 progress.addEventListener("click", scrub);
 progress.addEventListener("mousemove", e => mousedown && scrub(e));
